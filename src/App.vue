@@ -1,10 +1,23 @@
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
-  <router-view/>
+  <main class="root">
+    <router-view />
+  </main>
 </template>
+
+<script lang="ts">
+import { defineComponent } from 'vue';
+import { mapActions } from 'vuex';
+
+export default defineComponent({
+  mounted() {
+    this.fetchPeople();
+  },
+
+  methods: {
+    ...mapActions(['fetchPeople'])
+  }
+});
+</script>
 
 <style lang="scss">
 #app {
@@ -13,6 +26,11 @@
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+}
+.root {
+  max-width: 1420px;
+  margin: 0 auto;
+  padding: 10px 10px;
 }
 
 nav {
