@@ -3,11 +3,11 @@
     <div class="container">
       <h2 class="planet-name">{{ planet.name }}</h2>
       <div class="planet-info">
-        <p>Диаметр:</p>
-        <p>Гравитация:</p>
-        <p>Климат:</p>
-        <p>Поверхность:</p>
-        <p>Орбитальный период:</p>
+        <p>Диаметр: {{ planet.diameter }}</p>
+        <p>Гравитация: {{ planet.gravity }}</p>
+        <p>Климат: {{ planet.climate }}</p>
+        <p>Поверхность: {{ planet.terrain }}</p>
+        <p>Орбитальный период: {{ planet.orbital_period }}</p>
       </div>
     </div>
   </router-link>

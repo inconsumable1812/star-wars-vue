@@ -1,30 +1,42 @@
 <template>
   <main class="root">
-    <router-view />
+    <div class="error" v-if="getError">Ошибка: {{ getError }}</div>
+    <div class="loading" v-else-if="isLoading">
+      <p class="loading-text">Загрузка...</p>
+    </div>
+    <router-view v-else />
   </main>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { mapActions } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 
 export default defineComponent({
   mounted() {
+    this.fetchPlanets();
     this.fetchPeople();
   },
-
+  computed: {
+    ...mapGetters(['getError', 'isLoading'])
+  },
   methods: {
-    ...mapActions(['fetchPeople'])
+    ...mapActions(['fetchPlanets', 'fetchPeople'])
   }
 });
 </script>
 
 <style lang="scss">
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #2c3e50;
 }
 .root {
@@ -33,16 +45,7 @@ export default defineComponent({
   padding: 10px 10px;
 }
 
-nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
+.loading-text {
+  text-align: center;
 }
 </style>

@@ -1,14 +1,14 @@
 <template>
   <div class="container">
-    <h2 class="people-name"></h2>
+    <h2 class="people-name">{{ people.name }}</h2>
     <div class="people-info">
-      <p>Пол:</p>
-      <p>Дата рождения:</p>
-      <p>Рост:</p>
-      <p>Вес:</p>
-      <p>Цвет волос:</p>
-      <p>Цвет кожи:</p>
-      <p>Цвет глаз:</p>
+      <p>Пол: {{ people.gender }}</p>
+      <p>Дата рождения: {{ people.birth_year }}</p>
+      <p>Рост: {{ people.height }}</p>
+      <p>Вес: {{ people.mass }}</p>
+      <p>Цвет волос: {{ people.hair_color }}</p>
+      <p>Цвет кожи: {{ people.skin_color }}</p>
+      <p>Цвет глаз: {{ people.eye_color }}</p>
     </div>
   </div>
 </template>
@@ -16,7 +16,9 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 
-export default defineComponent({});
+export default defineComponent({
+  props: ['people']
+});
 </script>
 
 <style>
@@ -29,13 +31,13 @@ export default defineComponent({});
   border-radius: 10px;
 }
 
-.peopleName {
+.people-name {
   margin: 8px 0;
   text-align: center;
   font-size: 20px;
 }
 
-.peopleInfo {
+.people-info {
   padding: 8px 0;
   display: flex;
   row-gap: 8px;
