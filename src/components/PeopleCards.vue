@@ -14,10 +14,16 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { People } from '@/api/types';
+import { defineComponent, PropType } from 'vue';
 
 export default defineComponent({
-  props: ['people']
+  props: {
+    people: {
+      type: Object as PropType<People>,
+      required: true
+    }
+  }
 });
 </script>
 

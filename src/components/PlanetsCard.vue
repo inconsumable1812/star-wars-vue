@@ -15,9 +15,16 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import type { PropType } from 'vue';
+import { Planet } from '@/api/types';
 
 export default defineComponent({
-  props: ['planet']
+  props: {
+    planet: {
+      type: Object as PropType<Planet>,
+      required: true
+    }
+  }
 });
 </script>
 
