@@ -46,7 +46,7 @@ const getData: Module<State, GetData> = {
 
       if (data instanceof globalThis.Error) {
         commit('changeError', data);
-        return Promise.reject(data);
+        return null;
       }
       const allPlanets = [];
 
@@ -57,28 +57,29 @@ const getData: Module<State, GetData> = {
       if (data.count !== undefined) {
         const allPlanetsCount = data.count;
         const planetsInOnePage = 10;
+        const promisesArray = [];
 
         for (
           let index = 2;
           index <= allPlanetsCount / planetsInOnePage;
           index += 1
         ) {
-          const result = await fetchPlanets({ page: index.toString() });
-
-          if (result instanceof globalThis.Error) {
-            commit('changeError', result);
-            return Promise.reject(result);
-          }
-
-          if (result.results !== undefined) {
-            allPlanets.push(...result.results);
-          }
+          promisesArray.push(fetchPlanets({ page: index.toString() }));
         }
+        const result = await Promise.all(promisesArray);
+        result.forEach((res) => {
+          if (res instanceof Error) {
+            commit('changeError', data);
+          } else if (res.results !== undefined) {
+            allPlanets.push(...res.results);
+          }
+        });
       }
 
       data.results = [...allPlanets];
       commit('updatePlanets', data);
       commit('changeLoading', false);
+
       return data;
     },
     async fetchPeople({ commit }) {
@@ -86,7 +87,8 @@ const getData: Module<State, GetData> = {
       const data = await fetchPeople({ page: '1' });
 
       if (data instanceof globalThis.Error) {
-        return Promise.reject(data);
+        commit('changeError', data);
+        return null;
       }
       const allPeople = [];
 
@@ -97,22 +99,23 @@ const getData: Module<State, GetData> = {
       if (data.count !== undefined) {
         const allPeopleCount = data.count;
         const peopleInOnePage = 10;
-
+        const promisesArray = [];
         for (
           let index = 2;
           index <= allPeopleCount / peopleInOnePage;
           index += 1
         ) {
-          const result = await fetchPeople({ page: index.toString() });
-
-          if (result instanceof globalThis.Error) {
-            return Promise.reject(result);
-          }
-
-          if (result.results !== undefined) {
-            allPeople.push(...result.results);
-          }
+          promisesArray.push(fetchPeople({ page: index.toString() }));
         }
+
+        const result = await Promise.all(promisesArray);
+        result.forEach((res) => {
+          if (res instanceof Error) {
+            commit('changeError', data);
+          } else if (res.results !== undefined) {
+            allPeople.push(...res.results);
+          }
+        });
       }
 
       data.results = [...allPeople];

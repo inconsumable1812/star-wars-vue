@@ -45,6 +45,10 @@ export default defineComponent({
   padding: 10px 10px;
 }
 
+.error {
+  color: red;
+}
+
 .loading-text {
   text-align: center;
 }
