@@ -14,13 +14,14 @@
     </select>
   </label>
 
-  <div class="people">
+  <div class="people" v-if="getPeopleInCurrentPlanet.length !== 0">
     <people-cards
       v-for="people in getPeopleInCurrentPlanet"
       :key="people.name"
       :people="people"
     ></people-cards>
   </div>
+  <p v-else>Персонажей не найдено!</p>
 </template>
 
 <script lang="ts">
